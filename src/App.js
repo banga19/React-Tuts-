@@ -47,3 +47,7 @@ const [tasks, setTasks] = useState([ // code below is how STATE is used in react
 export default App;
 
 // NB:actions are pushed up A DIRECTORY when it comes to props while a state are passed down 
+
+// TO DO LIST BEFORE START OF CODING ON BOOTUP
+// - Start by creating anaother branch "Third" and conitue tut video from there
+// - 
