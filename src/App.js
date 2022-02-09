@@ -2,6 +2,7 @@ import { useState } from 'react'
 import React from 'react';
 import Header from './Components/Header'
 import Tasks from './Components/Tasks'
+import AddTask from './Components/AddTask'
 
 const App = () => {
 
@@ -32,12 +33,24 @@ const [tasks, setTasks] = useState([ // code below is how STATE is used in react
     setTasks(tasks.filter((task) => task.id !== id )) 
   }
 
+  // Toggle Reminder 
+  const toggleReminder = (id) => {
+    setTasks(
+      tasks.map((task) => 
+      task.id === id ?
+      {...task, reminder:!task.reminder}: task
+      )
+    )
+  }
 
 
   return( 
   <div className='container'>
     <Header />
-    { tasks.length > 0 ?  (<Tasks tasks={ tasks } onDelete={deleteTask} />) : (
+    <AddTask />
+    { tasks.length > 0 ?  (<Tasks tasks={ tasks } 
+    onDelete={deleteTask} 
+    onToggle={toggleReminder} />) : (
       'No tasks To show'
     )}
   </div>
@@ -48,6 +61,3 @@ export default App;
 
 // NB:actions are pushed up A DIRECTORY when it comes to props while a state are passed down 
 
-// TO DO LIST BEFORE START OF CODING ON BOOTUP
-// - Start by creating anaother branch "Third" and conitue tut video from there
-// - 
