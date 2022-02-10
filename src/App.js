@@ -1,32 +1,41 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react';
 import Header from './Components/Header'
 import Tasks from './Components/Tasks'
 import AddTask from './Components/AddTask'
 
+
 const App = () => {
 
+const[showAddTask, setShowAddTask] = useState(false) //<< is state used linked to the "addTaskButton" 
+const [tasks, setTasks] = useState([])// code << is how STATE is used in react to manage data. it is immutable
 
-const [tasks, setTasks] = useState([ // code below is how STATE is used in react to manage data. it is immutable
-  {
-      id: 1,
-      text: "Food delivery",
-      day: 'Jan 5th 2014',
-      reminder: false,
-  },
-  {
-      id: 2,
-      text: "Workout routine",
-      day: 'May 5th 2014',
-      reminder: false,
-  },
-  {
-      id: 3,
-      text: "Doc's Appointment",
-      day: 'Dec 20th 2014',
-      reminder: false,
-  },
-])
+  useEffect(() => {
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
+    }
+
+    getTasks()
+    
+  }, [] /*dependancy array?? */)
+
+  // Fetch Tasks
+  const fetchTasks = async () => {
+    const res =  await fetch('https://localhost:5000/tasks')
+    const data =  await res.json()
+
+    return data
+  }
+
+  // Add task 
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 10000) + 1
+    const newTask = {id, ...task}
+    setTasks([...tasks, newTask]) //{...task} is used to summerise all the objects in taskComponentLevelState
+
+  }
+
 
   // Delete Task
   const deleteTask = (id) => {
@@ -46,8 +55,11 @@ const [tasks, setTasks] = useState([ // code below is how STATE is used in react
 
   return( 
   <div className='container'>
-    <Header />
-    <AddTask />
+    <Header onAdd={()=> 
+      setShowAddTask(!showAddTask)} showAdd={showAddTask} /> {/* Prop(onAdd) is linked to a button in Header.js that is used to toggle the (AddTaskForm)*/}
+
+    { showAddTask && <AddTask onAdd={addTask} />} {/* && is a ternary operator used to check if condition is true without adding an else statement */}
+    
     { tasks.length > 0 ?  (<Tasks tasks={ tasks } 
     onDelete={deleteTask} 
     onToggle={toggleReminder} />) : (

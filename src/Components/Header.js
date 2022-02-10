@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 
 
-const Header = ({title}) => {
-    const onClick = () => {
-        console.log('click');
-    } 
+const Header = ({title, onAdd, showAdd}) => {
   return( 
   <header className='header'>
     <h1 /* <h1 style={HeadingStyle} */> {title} </h1>
-    <Button  onClick={onClick} /* props found and sent to Button.js *//>
-  </header>);
-};
+    <Button  
+    color={showAdd ? 'red': 'green'}
+    onClick={onAdd}  
+    text={showAdd ? 'Close' : 'Add' } /* if showAddTask is true, then display "close", else "add" */
+    
+    /* props above are found and sent to Button.js *//>
+  </header>)
+}
 
 Header.defaultProps = {
     title: 'Task Tracker',
