@@ -16,6 +16,7 @@ const [tasks, setTasks] = useState([])// code << is how STATE is used in react t
       setTasks(tasksFromServer)
     }
 
+    
     getTasks()
     
   }, [] /*dependancy array?? */)
@@ -25,13 +26,14 @@ const [tasks, setTasks] = useState([])// code << is how STATE is used in react t
     const res =  await fetch('https://localhost:5000/tasks')
     const data =  await res.json()
 
-    return data
+    
+    return res(data)
   }
 
   // Add task 
   const addTask = (task) => {
     const id = Math.floor(Math.random() * 10000) + 1
-    const newTask = {id, ...task}
+    const newTask = {id, ...tasks}
     setTasks([...tasks, newTask]) //{...task} is used to summerise all the objects in taskComponentLevelState
 
   }
