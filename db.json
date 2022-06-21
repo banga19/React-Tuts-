@@ -1,11 +1,13 @@
 {
-  "tasks": [
+  "tasks": 
+[
   {
     "id": 1,
     "text": "Food delivery",
     "day": "Jan 5th 2014",
     "reminder": false
   },
+  
   {
     "id": 2,
     "text": "Workout routine",
@@ -19,5 +21,5 @@
     "day": "Dec 20th 2014",
     "reminder": false
   }
-  ]
+]
 }
